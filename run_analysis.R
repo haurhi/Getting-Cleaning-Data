@@ -1,3 +1,5 @@
+library(dplyr)
+
 ## Read filepaths and variable names
 test_path <- 'UCI HAR Dataset/test'
 train_path <- 'UCI HAR Dataset/train'
@@ -41,6 +43,8 @@ attach(subdataset)
 tidy_set <- aggregate(subdataset, by = list(subject, activity), mean)
 tidy_set <- tidy_set[, -c(3, 4)]
 names(tidy_set)[1:2] <- c('subject', 'activity')
+## Alternative
+## group_by(subdataset, subject, activity) %>% summarise_each(funs(mean))
 
 ## Save as .txt file
 write.table(tidy_set, 'tidy_set.txt', row.name = F)
